@@ -20,11 +20,11 @@ const SiteAdmin = () => {
     { title: "Airtime Top up", link: "/airtime", icon: MdOutlineCall },
   ];
   const AccNavItems: NavItem[] = [
-    { title: "User list", link: "/profile", icon: CiUser },
+    { title: "User list", link: "/user-list", icon: CiUser },
   ];
   return (
-    <div className="w-full h-full font-sans p-4 flex flex-col gap-y-4">
-      <div>
+    <div className="w-full h-full font-sans p-4 flex flex-col gap-y-6">
+      <div className="flex flex-col text-gray-700 gap-y-4">
         <Link to={"/"} className="text-xl">
           <FaArrowLeftLong />
         </Link>

@@ -5,6 +5,8 @@ import  SiteAdmin  from "./components/home/site-admin/siteAdmin"
 import Settings from "./components/home/settings/settings";
 import Transactions from "./components/Transaction/page";
 import Notifications from "./components/notifications/page";
+import UserList from "./components/userList/page";
+import UserDetails from "./components/userList/user/page";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/transactions" element={<Transactions />}/>
         <Route path="/notifications" element={<Notifications />}/>
+        <Route path="/user-list" element={<UserList />} />
+        <Route path="/user-list/:userId" element={<UserDetails />} />
       </Routes>
     </Router>
   );

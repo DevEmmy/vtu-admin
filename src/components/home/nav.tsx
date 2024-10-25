@@ -17,20 +17,20 @@ const nav: React.FC<Prop> = ({ siteAdmin, dashboard, settings }) =>  {
             img: <LuLayoutDashboard />,
             title: "Dashboard",
             link: '/',
-            color: dashboard? 'text-primary' : 'text-gray-400'
+            color: dashboard? 'text-sky-400' : 'text-gray-400'
         },
         {
             img: <CiGlobe />,
             title: "Site Admin",
             link: '/site-admin',
-            color: siteAdmin ? 'text-primary' : 'text-gray-400'
+            color: siteAdmin ? 'text-sky-400' : 'text-gray-400'
 
         },
         {
             img: <IoSettingsOutline />,
             title: "Settings",
             link: '/settings',
-            color: settings ? 'text-primary' : 'text-gray-400'
+            color: settings ? 'text-sky-400' : 'text-gray-400'
         }
       ];
   return (

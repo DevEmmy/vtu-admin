@@ -1,11 +1,12 @@
 import Nav from "../nav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiUser } from "react-icons/ci";
 import { IconType } from "react-icons";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
-import { MdOutlineCall } from "react-icons/md";
 import { TbTransfer } from "react-icons/tb";
 import { RiAdminLine } from "react-icons/ri";
+import { useEffect } from "react";
+import { useUser } from "@/hooks/Auth";
 
 interface NavItem {
   title: string;
@@ -14,14 +15,24 @@ interface NavItem {
 }
 
 const SiteAdmin = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+
   const navItems: NavItem[] = [
     { title: "Admin Bank account", link: "/bank-account", icon: RiAdminLine },
-    { title: "Data plans", link: "/data-plans", icon: TbTransfer },
-    { title: "Airtime Top up", link: "/airtime", icon: MdOutlineCall },
+    { title: "Transactions", link: "/transactions", icon: TbTransfer },
   ];
+
   const AccNavItems: NavItem[] = [
     { title: "User list", link: "/user-list", icon: CiUser },
   ];
+
+  useEffect(() => {
+    if(!user) {
+      navigate("/sign-in")
+    };
+  }, [user, navigate]);
+
   return (
     <div className="w-full h-full font-sans p-4 flex flex-col gap-y-6">
       <div className="flex flex-col text-gray-700 gap-y-4">
@@ -43,7 +54,7 @@ const SiteAdmin = () => {
                 className="w-full py-1 flex items-center gap-2 justify-between"
               >
                 <div className="flex gap-1">
-                  <item.icon className="w-6 h-6" />
+                  <item.icon className="w-5 h-5" />
                   <span className="">{item.title}</span>
                 </div>
                 <FaAngleRight />

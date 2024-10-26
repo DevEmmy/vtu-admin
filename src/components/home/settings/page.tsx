@@ -1,5 +1,6 @@
 
-import Nav from '../nav'
+import Nav from '../nav';
+import { useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import { RiUserSettingsLine } from "react-icons/ri";
@@ -7,8 +8,25 @@ import { FaRegBell } from "react-icons/fa";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { LiaHeadsetSolid } from "react-icons/lia";
 import { RiArrowDropRightLine } from "react-icons/ri";
+import { useLogout, useUser } from '@/hooks/Auth';
+import { useNavigate } from 'react-router-dom';
 
 function settings() {
+    const { logout } = useLogout();
+    const { user } = useUser();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!user){
+          navigate("/sign-in");
+        }
+      },[user, navigate]);
+    
+      if(!user){
+        return null;
+      }
+    
+
     const settings = [
         {
             icon: <RiUserSettingsLine />,
@@ -54,7 +72,7 @@ function settings() {
             ))}
         </div>
 
-        <div className='flex justify-center text-primary text-sm font-bold'>
+        <div onClick={logout} className='flex justify-center text-sky-400 cursor-pointer text-sm font-bold'>
             <p>Log out</p>
         </div>
 

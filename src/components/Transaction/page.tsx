@@ -1,44 +1,31 @@
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TransactionCard } from "./transaction-card";
+import { Key, useEffect } from "react";
+import { useUser } from "@/hooks/Auth";
+import { useAllTransactions } from "@/hooks/use-transactions";
 
 const Transactions = () => {
-  const transactions = [
-    {
-      id: 1,
-      name: "John Doe",
-      description: "Payment for Order #1234",
-      amount: 5000,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      description: "Payment for Subscription",
-      amount: 1200,
-    },
-    { id: 3, name: "Admin", description: "Transfer to Bank", amount: -3000 },
-    {
-      id: 4,
-      name: "Emily Johnson",
-      description: "Payment for Order #5678",
-      amount: 7500,
-    },
-    { id: 5, name: "Admin", description: "Transfer to Bank", amount: -1500 },
-    {
-      id: 6,
-      name: "Michael Brown",
-      description: "Payment for Order #9876",
-      amount: 2000,
-    },
-    { id: 7, name: "Admin", description: "Transfer to Bank", amount: -100 },
-    {
-      id: 8,
-      name: "John Doe",
-      description: "Payment for Order #1234",
-      amount: 5000,
-    },
-  ];
+  const { user } = useUser();
+  const { transactions } = useAllTransactions();
+  const navigate = useNavigate();
+ 
+  
+  useEffect(() => {
+    if(!user){
+      navigate("/sign-in");
+    }
+  },[user, navigate]);
+  
+  if(!user){
+    return null;
+  }
+  console.log(transactions);
 
+
+  if (!transactions || !Array.isArray(transactions)) {
+    return <div>No transactions found</div>; // Fallback if transactions is undefined or not an array
+}
   return (
     <div className="relative px-3 py-5 flex flex-col gap-7 min-h-screen">
       <div>
@@ -48,11 +35,16 @@ const Transactions = () => {
         <h1 className="text-xl font-bold">Transactions</h1>
       </div>
       <div className="w-full mx-auto">
-        {transactions.map((transaction) => (
+        {transactions.map((transaction: {
+          user: any;
+          type: string; id: Key | null | undefined; name: string; amount: number; status: string;
+}) => (
           <TransactionCard
-            key={transaction.id}
-            name={transaction.name}
-            description={transaction.description}
+          firstname={transaction.user.firstName}
+          lastname={transaction.user.lastName}
+          key={transaction.id}
+            status={transaction.status}
+            type={transaction.type}
             amount={transaction.amount}
           />
         ))}

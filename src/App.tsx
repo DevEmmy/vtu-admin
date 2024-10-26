@@ -8,6 +8,7 @@ import Notifications from "./components/notifications/page";
 import UserList from "./components/userList/page";
 import UserDetails from "./components/userList/user/page";
 import AdminBankAccount from "./components/bank-account/page";
+import Login from "@/components/onboarding/signIn";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/bank-account" element={<AdminBankAccount />} />
         <Route path="/user-list" element={<UserList />} />
         <Route path="/user-list/:userId" element={<UserDetails />} />
+        <Route path="/sign-in" element={<Login />} />
       </Routes>
     </Router>
   );

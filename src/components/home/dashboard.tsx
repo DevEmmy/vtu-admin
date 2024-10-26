@@ -7,10 +7,11 @@ import {
 } from "react-icons/ri";
 import balance from "/BALANCE.png";
 import frame from "/Frame 399.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MetricsCard } from "./metrics";
 import { TransactionCard } from "../Transaction/transaction-card";
-// import { useAllTransactions } from "../../hooks/MakePayments";
+import { useUser } from "@/hooks/Auth";
+import { useAllTransactions } from "@/hooks/use-transactions";
 // import Each from "../Transaction/Each";
 // import useMonnify from "../../hooks/useMonnify";
 // import formatPrice from "../../utils/formatPrice";
@@ -18,9 +19,10 @@ import { TransactionCard } from "../Transaction/transaction-card";
 
 
 function dashboard() {
-//   const { transactions } = useAllTransactions();
+  const { transactions } = useAllTransactions();
   const [hideBalance, setHideBalance] = useState(true);
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const cardData = [
     { title: "Total Users", value: 10000, percentage: "+13.24%" },
@@ -29,15 +31,17 @@ function dashboard() {
     { title: "Total Revenue", value: 132930, percentage: "+13.24%" },
   ];
   
-  const transactions = [
-    { id: 1, name: "John Doe", description: "Payment for Order #1234", amount: 5000 },
-    { id: 2, name: "Jane Smith", description: "Payment for Subscription", amount: 1200 },
-    { id: 3, name: "Admin", description: "Transfer to Bank", amount: -3000 },
-    { id: 4, name: "Emily Johnson", description: "Payment for Order #5678", amount: 7500 },
-    { id: 5, name: "Admin", description: "Transfer to Bank", amount: -1500 },
-    { id: 6, name: "Michael Brown", description: "Payment for Order #9876", amount: 2000 },
-  ];
   
+  useEffect(() => {
+    if(!user){
+      navigate("/sign-in");
+    }
+  }, [user, navigate]);
+
+  if(!user){
+    return null;
+  }
+  console.log(transactions);
 
   return (
     <div className="flex flex-col w-full">
@@ -53,7 +57,7 @@ function dashboard() {
             />
           </div>
           <div>
-            <h1 className="font-semibold ">Hi, Emmanuel</h1>
+            <h1 className="font-semibold ">Hi, {user.firstName}</h1>
             <p className="text-[0.65rem] sm:text-sm text-gray-400">
               welcome to your Admin Dashboard!
             </p>
@@ -106,11 +110,13 @@ function dashboard() {
     <Link to={"/transactions"} className="text-xs text-sky-400"> View all </Link>
  </div>
  <div className="w-full mx-auto">
-      {transactions.slice(0,3).map((transaction) => (
+      {transactions.slice(0,3).map((transaction: any) => (
         <TransactionCard
           key={transaction.id}
-          name={transaction.name}
-          description={transaction.description}
+          firstname={transaction.user.firstName}
+          lastname={transaction.user.lastName}
+          type={transaction.type}
+          status={transaction.status}
           amount={transaction.amount}
         />
       ))}

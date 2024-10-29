@@ -1,10 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Nav from "./nav";
 import { CiBellOn } from "react-icons/ci";
-import {
-  RiEyeCloseLine,
-  RiEyeLine,
-} from "react-icons/ri";
+import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import balance from "/BALANCE.png";
 import frame from "/Frame 399.png";
 import { useEffect, useState } from "react";
@@ -12,13 +9,13 @@ import { MetricsCard } from "./metrics";
 import { TransactionCard } from "../Transaction/transaction-card";
 import { useUser } from "@/hooks/Auth";
 import { useAllTransactions } from "@/hooks/use-transactions";
+// import { useAdminData } from "@/hooks/use-admin-data";
 // import Each from "../Transaction/Each";
 // import useMonnify from "../../hooks/useMonnify";
 // import formatPrice from "../../utils/formatPrice";
 
-
-
 function dashboard() {
+  // const { adminData } = useAdminData();
   const { transactions } = useAllTransactions();
   const [hideBalance, setHideBalance] = useState(true);
   const navigate = useNavigate();
@@ -30,18 +27,16 @@ function dashboard() {
     { title: "Total Transactions", value: 25400, percentage: "+13.24%" },
     { title: "Total Revenue", value: 132930, percentage: "+13.24%" },
   ];
-  
-  
+
   useEffect(() => {
-    if(!user){
+    if (!user) {
       navigate("/sign-in");
     }
   }, [user, navigate]);
 
-  if(!user){
+  if (!user) {
     return null;
   }
-  console.log(transactions);
 
   return (
     <div className="flex flex-col w-full">
@@ -86,62 +81,48 @@ function dashboard() {
             </div>
             <div className="flex text-2xl items-center gap-1 font-bold">
               <h1>
-                ₦{hideBalance ? "****" : "100,000" }
-                 {/* formatPrice(user.accountBalance)}  */}
+                ₦{hideBalance ? "****" : "100,000"}
+                {/* formatPrice(user.accountBalance)}  */}
               </h1>
             </div>
           </div>
         </div>
 
-<div className="grid grid-cols-2 w-full gap-2">
-{cardData.map((item, index) => (
-        <MetricsCard
-          key={index}
-          title={item.title}
-          value={item.value}
-          percentage={item.percentage}
-        />
-      ))}
-</div>
+        <div className="grid grid-cols-2 w-full gap-2">
+          {cardData.map((item, index) => (
+            <MetricsCard
+              key={index}
+              title={item.title}
+              value={item.value}
+              percentage={item.percentage}
+            />
+          ))}
+        </div>
 
-<div className="flex flex-col w-full">
- <div className="flex justify-between">
-    <p className="font-sans text-sm font-semibold">Transactions</p>
-    <Link to={"/transactions"} className="text-xs text-sky-400"> View all </Link>
- </div>
- <div className="w-full mx-auto">
-      {transactions.slice(0,3).map((transaction: any) => (
-        <TransactionCard
-          key={transaction.id}
-          firstname={transaction.user.firstName}
-          lastname={transaction.user.lastName}
-          type={transaction.type}
-          status={transaction.status}
-          amount={transaction.amount}
-        />
-      ))}
-    </div>
-</div>
-
-        {/* <div className="w-full flex flex-col gap-4">
-          <div className="flex justify-between ">
-            <h1 className="font-bold ">Transactions</h1>
-            <Link to={"/transactions"} className="text-xs text-primary">
-              View all
+        <div className="flex flex-col w-full">
+          <div className="flex justify-between">
+            <p className="font-sans text-sm font-semibold">Transactions</p>
+            <Link to={"/transactions"} className="text-xs text-sky-400">
+              {" "}
+              View all{" "}
             </Link>
           </div>
-          <div className="flex flex-col gap-2 py-3 w-full">
-            {transactions?.map((item: any, index: number) => (
-              <Each item={item} key={index} />
+          <div className="w-full mx-auto">
+            {transactions?.slice(0, 3)?.map((transaction: any) => (
+              <TransactionCard
+                key={transaction._id}
+                firstname={transaction.user.firstName}
+                lastname={transaction.user.lastName}
+                type={transaction.type}
+                status={transaction.status}
+                amount={transaction.amount}
+              />
             ))}
           </div>
-        </div> */}
+        </div>
+
       </div>
-      <Nav
-        dashboard={true}
-        siteAdmin={false}
-        settings={false}
-      />
+      <Nav dashboard={true} siteAdmin={false} settings={false} />
     </div>
   );
 }

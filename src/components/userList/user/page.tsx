@@ -1,5 +1,5 @@
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Key, useEffect } from "react";
+import { Key, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Nav from "@/components/home/nav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,31 +8,36 @@ import { useAllUsers } from "@/hooks/use-users";
 import { useUser } from "@/hooks/Auth";
 import { useAllTransactions } from "@/hooks/use-transactions";
 
-
-
 const UserDetails = () => {
   const { userId } = useParams();
   const { transactions } = useAllTransactions();
   const { user } = useUser();
   const { users } = useAllUsers();
 
-  const userInfo = users && Array.isArray(users) 
-  ? users.find((user: { _id: string }) => user._id === userId)
-  : null;
-  
-  const userTransactions = transactions && Array.isArray(transactions) 
-  ? transactions.filter((transaction: { _id: string }) => transaction._id === userId) 
-  : [];
+  const [userTransactions, setUserTransactions] = useState([]);
 
+  const userInfo =
+    users && Array.isArray(users)
+      ? users.find((u: { _id: string }) => u._id === userId)
+      : null;
+
+
+  useEffect(() => {
+    if (userInfo && transactions) {
+      const filteredTransactions = transactions.filter(
+        (transaction: any) => transaction.user._id === userInfo._id
+      );
+      setUserTransactions(filteredTransactions);
+    }
+  }, [userInfo, transactions]);
   const infoStyle = "border-b flex flex-col gap-y-2";
 
   const navigate = useNavigate();
- console.log(userTransactions);
- console.log(userInfo)
+
   useEffect(() => {
-    if(!user) {
-      navigate("/sign-in")
-    };
+    if (!user) {
+      navigate("/sign-in");
+    }
   }, [user, navigate]);
 
   return (
@@ -55,35 +60,52 @@ const UserDetails = () => {
             <TabsContent value="general" className="flex flex-col gap-y-6">
               <div className={infoStyle}>
                 <span className="text-[#64748B]">Name</span>
-                <span>{user.firstName} {user.lastName}</span>
+                <span>
+                  {userInfo.firstName} {userInfo.lastName}
+                </span>
               </div>
               <div className={infoStyle}>
                 <span className="text-[#64748B]">Email</span>
-                <span>{user.email}</span>
+                <span>{userInfo.email}</span>
               </div>
               <div className={infoStyle}>
                 <span className="text-[#64748B]">Account Balance</span>
-                <span>₦ {user.accountBalance}</span>
+                <span>₦ {userInfo.accountBalance}</span>
               </div>
               <div className={infoStyle}>
                 <span className="text-[#64748B]">Phone Number</span>
-                <span>{user.phone}</span>
+                <span>{userInfo.phone}</span>
               </div>
               <div className={infoStyle}>
                 <span className="text-[#64748B]">Registration Date</span>
-                <span>{user.createdAt}</span>
+                <span>{userInfo.createdAt}</span>
               </div>
             </TabsContent>
             <TabsContent value="transactions">
-              {/* <div className="p-4">
-                {userTransactions.map((transaction: { id: Key | null | undefined; serviceType: string; amount: string; }) => (
-                  <UserTransactionCard
-                    key={transaction.id}
-                    serviceType={transaction.serviceType}
-                    amount={transaction.amount}
-                  />
-                ))}
-              </div> */}
+              <div className="p-4">
+                {userTransactions.map(
+                  (transaction: {
+                    _id: Key | null | undefined;
+                    details: any;
+                    type: string;
+                    status: string;
+                    amount: string;
+                    createdAt: string;
+                  }) => (
+                    <UserTransactionCard
+                      key={transaction._id}
+                      serviceType={transaction.type}
+                      status={transaction.status}
+                      network={transaction.details.network}
+                      phoneNumber={transaction.details.phone || transaction.details.phoneNumber}
+                      transactionId={transaction._id}
+                      amount={transaction.amount}
+                      createdAt={transaction.createdAt}
+                    />
+                  )
+                )}
+                {userTransactions.length == 0 && <p>No Transactions yet.</p>}
+              </div>
             </TabsContent>
           </Tabs>
           <Nav dashboard={false} siteAdmin={true} settings={false} />

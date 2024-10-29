@@ -17,9 +17,8 @@ const userList = () => {
     }
   }, [user, navigate]);
 
-  console.log(users);
   if (!users || !Array.isArray(users)) {
-    return <div>No transactions found</div>; // Fallback if transactions is undefined or not an array
+    return <div>No transactions found</div>; 
 }
 
   return (

@@ -60,7 +60,7 @@ function settings() {
         <h1 className='text-xl font-bold'>Settings</h1>
 
         <div className='flex flex-col gap-4'>
-            {settings.map((item, index) =>(
+            {/* {settings.map((item, index) =>(
                 <Link key={index} className='flex items-center py-2' to={item.link}>
                     <div className='text-xl'>
                         {item.icon}
@@ -69,7 +69,7 @@ function settings() {
                     <h2 className='ml-2'>{item.title}</h2>
                     <RiArrowDropRightLine  className='ml-auto text-3xl text-gray-500'/>
                 </Link>
-            ))}
+            ))} */}
         </div>
 
         <div onClick={logout} className='flex justify-center text-sky-400 cursor-pointer text-sm font-bold'>

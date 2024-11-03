@@ -3,11 +3,11 @@ import Nav from '../nav';
 import { useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
-import { RiUserSettingsLine } from "react-icons/ri";
-import { FaRegBell } from "react-icons/fa";
-import { MdOutlinePrivacyTip } from "react-icons/md";
-import { LiaHeadsetSolid } from "react-icons/lia";
-import { RiArrowDropRightLine } from "react-icons/ri";
+// import { RiUserSettingsLine } from "react-icons/ri";
+// import { FaRegBell } from "react-icons/fa";
+// import { MdOutlinePrivacyTip } from "react-icons/md";
+// import { LiaHeadsetSolid } from "react-icons/lia";
+// import { RiArrowDropRightLine } from "react-icons/ri";
 import { useLogout, useUser } from '@/hooks/Auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,28 +27,28 @@ function settings() {
       }
     
 
-    const settings = [
-        {
-            icon: <RiUserSettingsLine />,
-            title: 'Account Settings',
-            link: '/account-settings'
-        },
-        {
-            icon: <FaRegBell />,
-            title: 'Notification Settings',
-            link: '/notification-settings'
-        },
-        {
-            icon: <MdOutlinePrivacyTip />,
-            title: 'Privacy Settings',
-            link: '/privacy-settings'
-        },
-        {
-            icon: <LiaHeadsetSolid />,
-            title: 'Help & Support',
-            link: '/help-and-support'
-        },
-    ]
+    // const settings = [
+    //     {
+    //         icon: <RiUserSettingsLine />,
+    //         title: 'Account Settings',
+    //         link: '/account-settings'
+    //     },
+    //     {
+    //         icon: <FaRegBell />,
+    //         title: 'Notification Settings',
+    //         link: '/notification-settings'
+    //     },
+    //     {
+    //         icon: <MdOutlinePrivacyTip />,
+    //         title: 'Privacy Settings',
+    //         link: '/privacy-settings'
+    //     },
+    //     {
+    //         icon: <LiaHeadsetSolid />,
+    //         title: 'Help & Support',
+    //         link: '/help-and-support'
+    //     },
+    // ]
   return (
     <div>
 

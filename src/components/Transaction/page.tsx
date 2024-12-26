@@ -40,8 +40,8 @@ const Transactions = () => {
           type: string; id: Key | null | undefined; name: string; amount: number; status: string;
 }) => (
           <TransactionCard
-          firstname={transaction.user.firstName}
-          lastname={transaction.user.lastName}
+          firstname={transaction.user?.firstName}
+          lastname={transaction.user?.lastName}
           key={transaction.id}
             status={transaction.status}
             type={transaction.type}

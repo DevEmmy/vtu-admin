@@ -9,24 +9,30 @@ import { MetricsCard } from "./metrics";
 import { TransactionCard } from "../Transaction/transaction-card";
 import { useUser } from "@/hooks/Auth";
 import { useAllTransactions } from "@/hooks/use-transactions";
-// import { useAdminData } from "@/hooks/use-admin-data";
+import { useAdminData } from "@/hooks/use-admin-data";
 // import Each from "../Transaction/Each";
 // import useMonnify from "../../hooks/useMonnify";
 // import formatPrice from "../../utils/formatPrice";
 
 function dashboard() {
-  // const { adminData } = useAdminData();
+  const { adminData } = useAdminData();
+
+  console.log(adminData)
   const { transactions } = useAllTransactions();
   const [hideBalance, setHideBalance] = useState(true);
   const navigate = useNavigate();
   const { user } = useUser();
 
-  const cardData = [
-    { title: "Total Users", value: 10000, percentage: "+13.24%" },
-    { title: "Active Users", value: 3500, percentage: "+13.24%" },
-    { title: "Total Transactions", value: 25400, percentage: "+13.24%" },
-    { title: "Total Revenue", value: 132930, percentage: "+13.24%" },
-  ];
+  const [cardData, setCardData] = useState<any>(null);
+
+  useEffect(()=>{
+    setCardData([
+      { title: "Total Users", value: adminData?.totalUsers, percentage: "+13.24%" },
+      { title: "Active Users", value: adminData?.totalUsers, percentage: "+13.24%" },
+      { title: "Total Transactions", value: adminData?.totalTransactions, percentage: "+13.24%" },
+      { title: "Total Revenue", value: adminData?.totalRevenue, percentage: "+13.24%" },
+    ])
+  }, [adminData])
 
   useEffect(() => {
     if (!user) {
@@ -81,7 +87,7 @@ function dashboard() {
             </div>
             <div className="flex text-2xl items-center gap-1 font-bold">
               <h1>
-                ₦{hideBalance ? "****" : "100,000"}
+                ₦{hideBalance ? "****" : adminData?.totalBalance}
                 {/* formatPrice(user.accountBalance)}  */}
               </h1>
             </div>
@@ -89,7 +95,7 @@ function dashboard() {
         </div>
 
         <div className="grid grid-cols-2 w-full gap-2">
-          {cardData.map((item, index) => (
+          {cardData?.map((item: any, index: number) => (
             <MetricsCard
               key={index}
               title={item.title}
@@ -108,11 +114,11 @@ function dashboard() {
             </Link>
           </div>
           <div className="w-full mx-auto">
-            {transactions?.slice(0, 3)?.map((transaction: any) => (
+            {transactions?.slice(0, 5)?.map((transaction: any) => (
               <TransactionCard
                 key={transaction._id}
-                firstname={transaction.user.firstName}
-                lastname={transaction.user.lastName}
+                firstname={transaction.user?.firstName}
+                lastname={transaction.user?.lastName}
                 type={transaction.type}
                 status={transaction.status}
                 amount={transaction.amount}

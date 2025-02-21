@@ -12,7 +12,7 @@ type Plan = {
 };
 
 export default function PlanUpdatePage() {
-  const { error, fetchPlans, loading, updatePlan, plansData } = usePlans();
+  const { updatePlan, plansData } = usePlans();
   const [totalPlans, setTotalPlans] = useState<any>(plansData || []);
   const [networks, setNetwork] = useState(Object.keys(plansData));
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");

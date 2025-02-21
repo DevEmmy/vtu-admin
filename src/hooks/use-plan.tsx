@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { axiosConfig } from "@/utils/apiClient";
 import { toastError, toastSuccess } from "@/utils/toast";
 

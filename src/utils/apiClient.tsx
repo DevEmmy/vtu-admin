@@ -5,7 +5,7 @@ const getToken = ()=>{
 }
 
 export const axiosConfig = axios.create({
-    baseURL: "http://localhost:4030",
+    baseURL: "https://megapay-backend.onrender.com",
 });
 
 axiosConfig.interceptors.request.use(config => {

@@ -9,6 +9,8 @@ type Plan = {
   network: string;
   price: number;
   code: string;
+  dataSize: string;
+  duration: string;
 };
 
 export default function PlanUpdatePage() {
@@ -93,7 +95,7 @@ export default function PlanUpdatePage() {
             <option value="">-- Select Plan --</option>
             {plans.map((plan) => (
               <option key={plan._id} value={plan._id}>
-                Plan ID: {plan.code} - ₦{plan.price}
+                Plan: {plan.dataSize + "for " + plan.duration} - ₦{plan.price}
               </option>
             ))}
           </select>

@@ -9,6 +9,7 @@ import UserList from "./components/userList/page";
 import UserDetails from "./components/userList/user/page";
 import AdminBankAccount from "./components/bank-account/page";
 import Login from "@/components/onboarding/signIn";
+import PlanUpdatePage from "./components/home/UpdatePrice";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/user-list" element={<UserList />} />
         <Route path="/user-list/:userId" element={<UserDetails />} />
         <Route path="/sign-in" element={<Login />} />
+        <Route path="/update-plans" element={<PlanUpdatePage />} />
       </Routes>
     </Router>
   );

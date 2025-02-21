@@ -21,6 +21,7 @@ const SiteAdmin = () => {
   const navItems: NavItem[] = [
     { title: "Admin Bank account", link: "/bank-account", icon: RiAdminLine },
     { title: "Transactions", link: "/transactions", icon: TbTransfer },
+    { title: "Update Plans", link: "/update-plans", icon: TbTransfer },
   ];
 
   const AccNavItems: NavItem[] = [
